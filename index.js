@@ -9,21 +9,30 @@ import receipeRoute from "./routes/receipeRoute.js";
 
 dotenv.config();
 
-connectDataBase();
-
 const app = express();
 
 app.use(express.json());
-
 app.use(cors());
 
-app.use("/users", userRoute);
+connectDataBase();
 
+app.get("/", (req, res) => {
+    res.json({
+        message: "Recipe API Running Successfully 🚀"
+    });
+});
+
+app.get("/health", (req, res) => {
+    res.status(200).json({
+        status: "OK"
+    });
+});
+
+app.use("/users", userRoute);
 app.use("/receipes", receipeRoute);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-
     console.log(`Server Running on Port ${PORT}`);
 });
